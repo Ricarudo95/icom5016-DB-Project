@@ -1,0 +1,21 @@
+<html>
+
+	<head>
+
+		{% if title %}
+		<title>{{ title }} - Database</title>
+
+		{% else %}
+		<title>Welcome to Database</title>
+
+		{% endif %}
+
+	</head>
+
+	<body>
+		<div>Resources-Manager: <a href="/index">Start</a></div>
+		<hr>
+		{% block content %}{% endblock %}
+	</body>
+
+</html>
