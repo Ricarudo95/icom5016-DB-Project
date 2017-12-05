@@ -1,6 +1,8 @@
 from flask import  Flask,render_template,flash, redirect
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from resource import ResourceHandler as RHandle
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@localhost/Resources'
@@ -49,14 +51,20 @@ def showRequest():
     	return "This is the request table";
 
 @app.route('/show/resource')
-
 def showResources():
-    	return "This is the resource Table";
+    	return RHandle.getAllResources();
+
+@@app.route('/show/resource/<int:rid>')
+def showResources():
+    	return RHandle.getResourceById(rid);
+
+
+
 
 @app.route('/show/supplier')
 
 def showSupplier():
-    	return "This the the Suplier Table";
+    	return 'dimelo pa';
 
 @app.route('/show/users')
 
