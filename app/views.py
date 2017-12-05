@@ -3,6 +3,7 @@ from app import app
 from .forms import LoginForm
 
 @app.route('/')
+
 @app.route('/index')
 
 
@@ -28,9 +29,15 @@ def index():
 @app.route('/login', methods=['GET','POST'])
 
 def login():
+
 	form = LoginForm()
+
+	if form.validate():
+		flash('Login Requested for User= "%s", Password= "%s", remember_me="%s" ' %  (form.user.data, form.pswd.data, str(form.remember_me.data)))
+		return redirect('/index')
+	
 	return render_template('login.html',
-							title=login,
+							title = 'Sign In',
 							form=form)
 
 
