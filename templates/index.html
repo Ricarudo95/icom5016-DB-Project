@@ -5,12 +5,19 @@
 {%block title%}
 Home Page
 {% endblock %}
-
+{%block head%}
+	Welcome to our Resource Searching App (still in development)
+{%endblock%}
 
 {% block content %}
 	{{ utils.flashed_messages() }}
-	<h1>Hi, Hardcode!</h1>
+	<h1>Hi, to access databases follow the next steps:</h1>
 	
-	<div><p>HardCode says: <b>Hardcode</b></p></div>
+	<div>
+		<p>1) To access a particular table imput the table name in the url exp: localhost:5000/request </p>
+	
+	
+	
+	</div>
 	
 {% endblock %}

@@ -1,12 +1,11 @@
 from flask import  Flask,render_template,flash, redirect
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from forms import LoginForm
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@localhost/Resources'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config.update(SECRET_KEY = 'TresTristresTigres')
+# app.config.update(SECRET_KEY = 'TresTristresTigres')
 
 db = SQLAlchemy(app)
 Bootstrap(app)
@@ -14,57 +13,60 @@ Bootstrap(app)
 # app.config.from_object('config')
 
 
-# class Request(db.Model):
-# 	__tablename__ = 'request'
+class Request(db.Model):
+	__tablename__ = 'request'
 
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	p_id = db.Column(db.Integer)
-# 	r_id = db.Column(db.Integer)
-# 	qty_request = db.Column(db.Integer)
-
-
-# 	def __init__(self, person_id, resource_id, quatity ):
-# 		p_id = person_id
-# 		r_id = resource_id
-# 		qty_request = quatity
+	id = db.Column(db.Integer, primary_key=True)
+	p_id = db.Column(db.Integer)
+	r_id = db.Column(db.Integer)
+	qty_request = db.Column(db.Integer)
 
 
+	def __init__(self, person_id, resource_id, quatity ):
+		p_id = person_id
+		r_id = resource_id
+		qty_request = quatity
 
 
-# # db.create_all()
 
-# # db.session.add(User(456,234,10))
-# # db.session.add(User(578,345,6))
-
-# # db.session.commit()
 
 
 @app.route('/')
-
 
 def index():
 	
 	return  render_template('index.html');
 
+@app.route('/test')
+
+def test():
+	return "Como poco coco come poco coco compra"
 
 
+@app.route('/show/request')
 
+def showRequest():
+    	return "This is the request table";
 
+@app.route('/show/resource')
 
-@app.route('/login', methods=['GET','POST'])
+def showResources():
+    	return "This is the resource Table";
 
-def login():
+@app.route('/show/supplier')
 
-	form = LoginForm()
+def showSupplier():
+    	return "This the the Suplier Table";
 
-	if form.validate_on_submit():
-		flash('Login Requested for User= "%s", Password= "%s", remember_me="%s" ' %  (form.user.data, form.pswd.data, str(form.remember_me.data)))
-		return redirect('/')
-	
-	return render_template('login.html',
-							title = 'Sign In',
-							form=form)
+@app.route('/show/users')
 
+def showUsers():
+    	return "This is the Table of Currets users";
+
+@app.route('/show/admin')
+
+def showAdministrators():
+    	return "What how did you get here, this is for administrators only";
 
 if __name__ ==  "__main__":
 	app.run(debug = True)
