@@ -32,7 +32,7 @@ def login():
 
 	form = LoginForm()
 
-	if form.validate():
+	if form.validate_on_submit():
 		flash('Login Requested for User= "%s", Password= "%s", remember_me="%s" ' %  (form.user.data, form.pswd.data, str(form.remember_me.data)))
 		return redirect('/index')
 	

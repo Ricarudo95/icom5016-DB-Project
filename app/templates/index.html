@@ -1,4 +1,11 @@
-{% extends "base.html" %}
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block title%}
+Home Page
+{% endblock %}
+
+
 {% block content %}
 	<h1>Hi, {{ user.nickname }}!</h1>
 	{% for post in posts %}

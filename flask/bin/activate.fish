@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/ricarudo/Desktop/PyFlask/flask"
+set -gx VIRTUAL_ENV "/home/ricarudo/Desktop/icom5016-DB-Project/flask"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
