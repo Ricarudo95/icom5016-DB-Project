@@ -21,6 +21,15 @@ class RequestHandler:
             result = self.build_request_dict(row)
             result_list.append(result)
         return jsonify(Requests=result_list)
+    
+        def getRequestById(self, reqid):
+	    req_list = [[1, 346, 436, 10] ,[2, 647,445, 1] , [3, 345,3434, 23]]
+        row = req_list[reqid-1]
+        if not row:
+            return jsonify(Error = "Request Not Found"), 404
+        else:
+            request = self.build_resource_dict(row)
+            return jsonify(Resquest = request)
 
     
 
