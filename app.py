@@ -1,7 +1,8 @@
 from flask import  Flask, jsonify, request
 from resource import ResourceHandler as RHandle
 from request import RequestHandler as RQHandle
-
+from supplier import SupplierHandler as SHandler
+from user import UserHandler as UHandler
 app = Flask(__name__)
 
 
@@ -30,14 +31,13 @@ def getResources(rid):
     	return RHandle().getResourceById(rid);
 
 @app.route('/show/supplier')
-
 def showSupplier():
-    	return 'dimelo pa';
+    	return SHandler().getAllSupplier();
 
 @app.route('/show/users')
 
 def showUsers():
-    	return "This is the Table of Currets users";
+    	return UHandler().getAllUser();
 
 @app.route('/show/admin')
 
