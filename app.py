@@ -52,14 +52,11 @@ def showRequest():
 
 @app.route('/show/resource')
 def showResources():
-    	return RHandle.getAllResources();
+    	return RHandle.getAllResources(RHandle);
 
-@@app.route('/show/resource/<int:rid>')
-def showResources():
+@app.route('/show/resource/<int:rid>')
+def getResources(rid):
     	return RHandle.getResourceById(rid);
-
-
-
 
 @app.route('/show/supplier')
 
