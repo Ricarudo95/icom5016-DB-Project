@@ -28,7 +28,7 @@ class RequestHandler:
         if not row:
             return jsonify(Error = "Request Not Found"), 404
         else:
-            request = self.build_resource_dict(row)
+            request = self.build_request_dict(row)
             return jsonify(Resquest = request)
 
     
