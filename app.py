@@ -21,23 +21,13 @@ def test():
 def showRequest():
     	return RQHandle().getAllRequest();
 
-@app.route('/show/resources')
+@app.route('/show/resource')
 def showResources():
-<<<<<<< HEAD
-=======
-
->>>>>>> 83a2177dd228bae29186552f006b24d8c97b498a
     	return RHandle().getAllResources();
 
 @app.route('/show/resource/<int:rid>')
 def getResources(rid):
     	return RHandle().getResourceById(rid);
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 83a2177dd228bae29186552f006b24d8c97b498a
 
 @app.route('/show/supplier')
 
