@@ -2,6 +2,7 @@ from flask import  Flask,render_template,flash, redirect
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from resource import ResourceHandler as RHandle
+from request import RequestHandler as RQHandle
 
 
 app = Flask(__name__)
@@ -48,15 +49,15 @@ def test():
 @app.route('/show/request')
 
 def showRequest():
-    	return "This is the request table";
+    	return RQHandle().getAllRequest();
 
 @app.route('/show/resource')
 def showResources():
-    	return RHandle.getAllResources(RHandle);
+    	return RHandle().getAllResources();
 
 @app.route('/show/resource/<int:rid>')
 def getResources(rid):
-    	return RHandle.getResourceById(rid);
+    	return RHandle().getResourceById(rid);
 
 @app.route('/show/supplier')
 
