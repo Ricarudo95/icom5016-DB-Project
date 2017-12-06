@@ -16,9 +16,19 @@ class SupplierHandler:
 
 
     def getAllSupplier(self):
-        resources_list = [[24, 'Pollo_Inc', 'Pollosricos', 'Maya', 34] ,[26, 'Lechon_Inc', 'Navidad', 'Maya', 456 ] , [25, 'Gatos_Inc', 'Enamorado', 'Maya', 345 ]]
+        resources_list = [[1, 'Pollo_Inc', 'Pollosricos', 'Maya', 34] ,[2, 'Lechon_Inc', 'Navidad', 'Maya', 456 ] , [3, 'Gatos_Inc', 'Enamorado', 'Maya', 345 ]]
         result_list = []
         for row in resources_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
         return jsonify(Suppliers=result_list)
+
+    def getSupplierById(self, sid):
+	suppliers_list = [[1, 'Pollo_Inc', 'Pollosricos', 'Maya', 34] ,[2, 'Lechon_Inc', 'Navidad', 'Maya', 456 ] , [3, 'Gatos_Inc', 'Enamorado', 'Maya', 345 ]]
+        
+	row = suppliers_list[sid-1]
+        if not row:
+            return jsonify(Error = "Supplier Not Found"), 404
+        else:
+            supplier = self.build_supplier_dict(row)
+            return jsonify(Supplier = supplier)
