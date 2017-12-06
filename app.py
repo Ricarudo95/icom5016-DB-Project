@@ -1,43 +1,13 @@
-from flask import  Flask,render_template,flash, redirect
-from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
+from flask import  Flask, jsonify, request
 from resource import ResourceHandler as RHandle
 
-
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@localhost/Resources'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-# app.config.update(SECRET_KEY = 'TresTristresTigres')
-
-db = SQLAlchemy(app)
-Bootstrap(app)
-
-# app.config.from_object('config')
-
-
-class Request(db.Model):
-	__tablename__ = 'request'
-
-	id = db.Column(db.Integer, primary_key=True)
-	p_id = db.Column(db.Integer)
-	r_id = db.Column(db.Integer)
-	qty_request = db.Column(db.Integer)
-
-
-	def __init__(self, person_id, resource_id, quatity ):
-		p_id = person_id
-		r_id = resource_id
-		qty_request = quatity
-
-
-
 
 
 @app.route('/')
 
 def index():
-	
-	return  render_template('index.html');
+	return 'Disaster Site!'
 
 @app.route('/test')
 
@@ -50,13 +20,17 @@ def test():
 def showRequest():
     	return "This is the request table";
 
-@app.route('/show/resource')
+@app.route('/show/resources')
 def showResources():
-    	return RHandle.getAllResources(RHandle);
+
+    	return RHandle().getAllResources();
 
 @app.route('/show/resource/<int:rid>')
 def getResources(rid):
-    	return RHandle.getResourceById(rid);
+    	return RHandle().getResourceById(rid);
+
+
+
 
 @app.route('/show/supplier')
 
