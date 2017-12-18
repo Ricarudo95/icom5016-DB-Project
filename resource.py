@@ -25,7 +25,7 @@ class ResourceHandler:
 
     def getResourceById(self, rid):
         resources_list = [[1, 1, 'R1', 'Water-Small bottles', 5, 1] , [2, 2,'R2', 'Medications', 10, 11] , [3, 3,'R3', 'Baby Food', 4, 6]]
-        row = resources_list[rid][0]
+        row = resources_list[rid-1]
         if not row:
             return jsonify(Error = "Resource Not Found"), 404
         else:

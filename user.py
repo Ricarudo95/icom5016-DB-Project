@@ -17,9 +17,19 @@ class UserHandler:
 
 
     def getAllUser(self):
-        resources_list = [ [ '01', 'Eduardo', 'Vega','Elpapichulo98', 'Maya', 34]  , ['02', 'Michelle', 'Santiago','TresTristesTigres', 'Maya', 456 ] ]
+        resources_list = [ [ 1, 'Eduardo', 'Vega','Elpapichulo98', 'Maya', 34]  , [2, 'Michelle', 'Santiago','TresTristesTigres', 'Maya', 456 ] ]
         result_list = []
         for row in resources_list:
             result = self.build_user_dict(row)
             result_list.append(result)
         return jsonify(Users=result_list)
+
+    def getUserById(self, uid):
+	users_list = [ [ 1, 'Eduardo', 'Vega','Elpapichulo98', 'Maya', 34]  , [2, 'Michelle', 'Santiago','TresTristesTigres', 'Maya', 456 ] ]
+        
+	row = users_list[uid-1]
+        if not row:
+            return jsonify(Error = "User Not Found"), 404
+        else:
+            user = self.build_user_dict(row)
+            return jsonify(User = user)
