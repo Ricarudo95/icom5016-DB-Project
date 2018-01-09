@@ -1,5 +1,6 @@
 from flask import  Flask, jsonify, request
 from user import UserHandler
+from supplier import SupplierHandler
 app = Flask(__name__)
 
 
@@ -66,24 +67,24 @@ def searchRequested(keyword):
 #Basic Route that returns list of total Suppliers.
 @app.route('/show/supplier')
 def showSupplier():
-    	return 'these are the suppliers';
+    	return SupplierHandler.getAllSupplier();
 
 #--------ID
 
 #Basic Route that returns specific Suppliers.
 @app.route('/show/supplier/id/<int:sid>')
 def getSupplier(sid):
-    	return 'Here is supplier ' + str(sid);
+    	return SupplierHandler.getSupplierbyId(sid);
 
 #Basic Route that returns then list of resources specific supplier supplies.
 @app.route('/show/supplier/id/<int:sid>/resource')
 def getSupplierResources(sid):
-    	return 'these are all the things supplier ' + str(sid) + ' has. ';
+    	return SupplierHandler.getSupplierResources(sid);
 
 #Basic Route that returns then list of resources specific supplier has sold.
 @app.route('/show/supplier/id/<int:sid>/receipt')
 def getSupplierReceipts(sid):
-    	return 'these are all the things supplier ' + str(sid) + ' has sold. ';
+    	return SupplierHandler.getSupplierResorceSold(sid);
 
 #-----------------------------------------------------------------------
 

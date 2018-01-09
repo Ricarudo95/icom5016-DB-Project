@@ -17,7 +17,7 @@ class SupplierHandler:
 
     #------Building Dictionary for Resources query results
 
-     def build_resource_dict(self, row):
+    def build_resource_dict(self, row):
         result = {}
         result['r_id'] = row[0]
         result['s_id'] = row[1]
@@ -53,21 +53,25 @@ class SupplierHandler:
             supplier = self.build_Supplier_dict(row)
             return jsonify(Supplier = supplier);
 
-    def getSuppierResources(self, sid):
-    dao = SupplierDao()
-    resource_list = dao.getSupplierResource()
-    result_list = []
-    for row in resource_list:
-        result = self.build_resource_dict(row)
-        result_list.append(result)
-    return jsonify(Suppliers_Resources = result_list)
+     #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has.
 
-    def getSuppierResourceSold(self, sid):
-    dao = SupplierDao()
-    resource_list = dao.getSupplierResourceSold()
-    result_list = []
-    for row in resource_list:
-        result = self.build_resource_dict(row)
-        result_list.append(result)
-    return jsonify(Suppliers_Resources = result_list)
+    def getSupplierResources(self, sid):
+        dao = SupplierDao()
+        resource_list = dao.getSupplierResource()
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Suppliers_Resources = result_list)
+
+    #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has Sold.
+
+    def getSupplierResourceSold(self, sid):
+        dao = SupplierDao()
+        resource_list = dao.getSupplierResourceSold()
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Suppliers_Resources = result_list)
 
