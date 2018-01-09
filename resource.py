@@ -2,6 +2,9 @@ from flask import jsonify
 
 
 class ResourceHandler:
+    
+     #------Building Dictionary for Resources query results
+
     def build_resource_dict(self, row):
         result = {}
         result['r_id'] = row[0]
@@ -10,29 +13,105 @@ class ResourceHandler:
         result['category'] = row[3]
         result['quantity'] = row[4]
         result['price'] = row[5]
+        result['adminitrator'] = row[6]
+        result['transaction'] = row[7]
+
         return result
 
+    #------Building Dictionary for Suppliers query results
+
+    def build_supplier_dict(self, row):
+        result = {}
+        result['Suplier id'] = row[0]
+        result['Suplier Name'] = row[1]
+        result['Password'] = row[2]
+        result['Location'] = row[3]
+        result['Address'] = row[4]
+       
+        return result
+
+    #------Returns all Users in the Database
 
     def getAllResources(self):
-        resources_list = [[1, 1, 'R1', 'Water-Small bottles', 5, 1 ], 
-			  [2, 2,'R2', 'Medications', 10, 11], 
-			  [3, 3,'R3', 'Baby Food', 4, 6]]
+        dao = ResourceDao()
+        resource_list = dao.getAllResources()
         result_list = []
-        for row in resources_list:
+        for row in resource_list:
             result = self.build_resource_dict(row)
             result_list.append(result)
         return jsonify(Resources=result_list)
 
+    #------Recieves an Resource Id and the Returns info of that Resource
+
     def getResourceById(self, rid):
-        resources_list = [[1, 1, 'R1', 'Water-Small bottles', 5, 1] , [2, 2,'R2', 'Medications', 10, 11] , [3, 3,'R3', 'Baby Food', 4, 6]]
-        row = resources_list[rid][0]
+        dao = ResourceDao()
+        row = dao.getResourceById(rid)
         if not row:
             return jsonify(Error = "Resource Not Found"), 404
         else:
             resource = self.build_resource_dict(row)
             return jsonify(Resource = resource)
 
-    def searchResources(self, args):
+    #-------Check if Resource is avaiable.
+
+    def isAvailable(self, rid):
+        dao = ResourceDao()
+        status = dao.isAvailable(rid)
+        return status
+    
+    #------Recieves an Resource Id and the Returns list of Suppliers that have that resource.
+
+    def getResourceSupplier(self, rid):
+        dao = ResourceDao()
+        supplier_list = dao.getResourceSupplier(rid)
+        result_list = []
+        for row in supplier_list:
+            result = self.build_supplier_dict(row)
+            result_list.append(result)
+        return jsonify(Resource_Suppliers = result_list)
+
+    #------Returns all Available resources in the Database
+
+    def getAvailableResources(self):
+        dao = ResourceDao()
+        resource_list = dao.getAvailableResources()
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources=result_list)
+
+    #------Returns all Requested resources in the Database
+
+    def getRequestedResources(self):
+        dao = ResourceDao()
+        resource_list = dao.getRequestedResources()
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources=result_list)
+
+    #------Search resourceses available witha specific keyword - INCOMPLETE
+
+    def searchAvailable(self, args):
+        cartegory = args.get("category")
+        resources_list = []
+
+        if (len(args) == 1) and category:
+            resources_list = []
+        else:
+            return jsonify(Error = "Malformed query string"), 400
+        result_list = []
+        for row in resources_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources=result_list)
+
+    
+    #------Search Requested resources with specific keyword - INCOMPLETE
+
+    def searchRequested(self, args):
         cartegory= args.get("category")
         resources_list = []
 
@@ -45,5 +124,7 @@ class ResourceHandler:
             result = self.build_resource_dict(row)
             result_list.append(result)
         return jsonify(Resources=result_list)
+
+    
 
     

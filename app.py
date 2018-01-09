@@ -1,6 +1,7 @@
 from flask import  Flask, jsonify, request
 from user import UserHandler
 from supplier import SupplierHandler
+from resource import ResourceHandler
 app = Flask(__name__)
 
 
@@ -13,49 +14,49 @@ def index():
 #Basic Route that returns list of total resources. Sorted by resource name.
 @app.route('/show/resource')
 def showResources():
-    	return RHandle().getAllResources();
+    	return ResourceHandle().getAllResources();
 
 #--------ID
 
 #Route used to get a resouce via its id
 @app.route('/show/resource/id/<int:rid>')
 def getResourceById(rid):
-	return 'Resouce ' + str(rid) + ' Is a thingie'	
+	return ResourceHandler.getResourceById(rid)	
 
 #Route check if specific id is available.
 @app.route('/show/resource/id/<int:rid>/available')
 def checkAvailable(rid):
-	return 'Resouce ' + str(rid) + ' Is not her
+	return ResourceHandler.isAvailable(rid)
 
 #Route used to get list of supplier of specific resource.
 @app.route('/show/resource/id/<int:rid>/supplier')
 def getResourceSupplierById(rid):
-	return 'Resouce ' + str(rid) + ' Is made by Hasbro'	
+	return ResourceHandler.getResourceSupplier(rid)
 
 #--------Available
 
 #Route used to get all available resouces
 @app.route('/show/resource/available')
 def getAvailableResource():
-	return 'All Elemenets available'
+	return ResourceHandler.getAvailableResources()
 
 
 #Route used to search available resources via keyword
 @app.route('/show/resource/available/search/<keyword>')
 def searchAvailable(keyword):
-	return 'Resouce ' + keyword + ' Is Available'
+	return ResourceHandler.searchAvailable(keyword)
 
 #--------Requested
 
 #Route used to get all requested resouces
 @app.route('/show/resource/requested')
 def getRequestedResource():
-	return 'All Elemenets requested'
+	return ResourceHandler.getRequestedResources()
 
 #Route used to search available resources via keyword. Sorted by Resouce name
 @app.route('/show/resource/requested/search/<keyword>')
 def searchRequested(keyword):
-	return 'Resouce ' + keyword + ' Is Available'
+	return ResourceHandler.searchRequested(keyword)
 
 #-----------------------------------------------------------------------
 
