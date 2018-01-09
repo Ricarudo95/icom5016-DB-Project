@@ -1,4 +1,5 @@
 from flask import  Flask, jsonify, request
+from user import UserHandler
 app = Flask(__name__)
 
 
@@ -91,19 +92,19 @@ def getSupplierReceipts(sid):
 #Basic Route that returns list of total Users.
 @app.route('/show/user')
 def showUsers():
-    	return 'these are the user';
+    	return UserHandler.getAllUser();
 
 #--------ID
 
-#Basic Route that returns specific Suppliers.
-@app.route('/show/supplier/id/<int:uid>')
-def getUser(sid):
-    	return 'Here is user ' + str(uid);
+#Basic Route that returns specific User.
+@app.route('/show/user/id/<int:uid>')
+def getUser(uid):
+    	return UserHandler.getUserbyId(uid);
 
 #Basic Route that returns then list of resources specific user has bought or aquired.
-@app.route('/show/supplier/id/<int:uid>/receipt')
-def getUserReceipts(sid):
-    	return 'these are all the things user ' + str(uid) + ' has bought. ';
+@app.route('/show/user/id/<int:uid>/receipt')
+def getUserReceipts(uid):
+    	return UserHandler.getUserSuppliers(uid);
 
 #-----------------------------------------------------------------------
 
