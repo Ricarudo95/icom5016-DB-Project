@@ -33,6 +33,11 @@ def checkAvailable(rid):
 def getResourceSupplierById(rid):
 	return ResourceHandler.getResourceSupplier(rid)
 
+#Routes used to get suppliers of items in a specific location
+@app.route('/show/resource/id/<int:rid>/locate/<location>')
+def getResourcesSuppplierFrom(rid,location):
+	return ResourceHandler.fromLocation(rid,location)
+
 #--------Available
 
 #Route used to get all available resouces
@@ -80,7 +85,7 @@ def getSupplierResources(sid):
     return SupplierHandler.getSupplierResources(sid);
 
 #Basic Route that returns then list of resources specific supplier has sold.
-@app.route('/show/supplier/id/<int:sid>/receipt')
+@app.route('/show/supplier/id/<int:sid>/sold')
 def getSupplierReceipts(sid):
     return SupplierHandler.getSupplierResorceSold(sid);
 
@@ -100,10 +105,10 @@ def showUsers():
 def getUser(uid):
     return UserHandler.getUserbyId(uid);
 
-#Basic Route that returns then list of resources specific user has bought or aquired.
-@app.route('/show/user/id/<int:uid>/receipt')
-def getUserReceipts(uid):
-    return UserHandler.getUserSuppliers(uid);
+#Basic Route that returns the list of resources specific user has bought or acquired.
+@app.route('/show/user/id/<int:uid>/acquired')
+def getUserResources(uid):
+    return UserHandler.getUserResources(uid);
 
 #-----------------------------------------------------------------------
 

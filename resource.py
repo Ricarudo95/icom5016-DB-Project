@@ -13,8 +13,6 @@ class ResourceHandler:
         result['category'] = row[3]
         result['quantity'] = row[4]
         result['price'] = row[5]
-        result['adminitrator'] = row[6]
-        result['transaction'] = row[7]
 
         return result
 
@@ -51,6 +49,21 @@ class ResourceHandler:
         else:
             resource = self.build_resource_dict(row)
             return jsonify(Resource = resource)
+
+    #------Recieves an Resource Id and Location and returns appropriate suppliers
+
+    def fromLocation(self, rid, location):
+        dao = ResourceDao()
+        supplier_list = dao.fromLocation(rid, location)
+        result_list = []
+        for row in supplier_list:
+            result = self.build_supplier_dict(row)
+            result_list.append(result)
+        return jsonify(Resource_Suppliers = result_list)
+
+
+
+
 
     #-------Check if Resource is avaiable.
 

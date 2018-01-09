@@ -16,18 +16,19 @@ class UserHandler:
        
         return result
 
-    #------Building Dictionary for Suppliers query results
-     
-    def build_supplier_dict(self, row):
-        result = {}
-        result['Suplier id'] = row[0]
-        result['Suplier Name'] = row[1]
-        result['Password'] = row[2]
-        result['Location'] = row[3]
-        result['Address'] = row[4]
-       
-        return result
+    #------Building Dictionary for Resources query results
 
+    def build_resource_dict(self, row):
+        result = {}
+        result['r_id'] = row[0]
+        result['s_id'] = row[1]
+        result['rname'] = row[2]
+        result['category'] = row[3]
+        result['quantity'] = row[4]
+        result['price'] = row[5]
+     
+
+        return result
     #------Returns all Users in the Database
 
     def getAllUser(self):
@@ -52,12 +53,12 @@ class UserHandler:
 
     #------Recieves an User Id an the Retuns Suppliers the user has bought from.
 
-    def getUserSuppliers(self, uid):
+    def getUserResources(self, uid):
         dao = UserDao()
-        supplier_list = dao.getUserSuppliers(uid)
+        resource_list = dao.getUserResources(uid)
         result_list = []
-        for row in supplier_list:
-            result = self.build_supplier_dict(row)
+        for row in resource_list:
+            result = self.build_resource_dict(row)
             result_list.append(result)
-        return jsonify(User_Suppliers = result_list)
+        return jsonify(User_Resources = result_list)
 
