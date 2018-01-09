@@ -14,7 +14,7 @@ def index():
 #Basic Route that returns list of total resources. Sorted by resource name.
 @app.route('/show/resource')
 def showResources():
-    	return ResourceHandle().getAllResources();
+    return ResourceHandle().getAllResources();
 
 #--------ID
 
@@ -65,24 +65,24 @@ def searchRequested(keyword):
 #Basic Route that returns list of total Suppliers.
 @app.route('/show/supplier')
 def showSupplier():
-    	return SupplierHandler.getAllSupplier();
+    return SupplierHandler.getAllSupplier();
 
 #--------ID
 
 #Basic Route that returns specific Suppliers.
 @app.route('/show/supplier/id/<int:sid>')
 def getSupplier(sid):
-    	return SupplierHandler.getSupplierbyId(sid);
+    return SupplierHandler.getSupplierbyId(sid);
 
 #Basic Route that returns then list of resources specific supplier supplies.
 @app.route('/show/supplier/id/<int:sid>/resource')
 def getSupplierResources(sid):
-    	return SupplierHandler.getSupplierResources(sid);
+    return SupplierHandler.getSupplierResources(sid);
 
 #Basic Route that returns then list of resources specific supplier has sold.
 @app.route('/show/supplier/id/<int:sid>/receipt')
 def getSupplierReceipts(sid):
-    	return SupplierHandler.getSupplierResorceSold(sid);
+    return SupplierHandler.getSupplierResorceSold(sid);
 
 #-----------------------------------------------------------------------
 
@@ -91,19 +91,19 @@ def getSupplierReceipts(sid):
 #Basic Route that returns list of total Users.
 @app.route('/show/user')
 def showUsers():
-    	return UserHandler.getAllUser();
+    return UserHandler.getAllUser();
 
 #--------ID
 
 #Basic Route that returns specific User.
 @app.route('/show/user/id/<int:uid>')
 def getUser(uid):
-    	return UserHandler.getUserbyId(uid);
+    return UserHandler.getUserbyId(uid);
 
 #Basic Route that returns then list of resources specific user has bought or aquired.
 @app.route('/show/user/id/<int:uid>/receipt')
 def getUserReceipts(uid):
-    	return UserHandler.getUserSuppliers(uid);
+    return UserHandler.getUserSuppliers(uid);
 
 #-----------------------------------------------------------------------
 
