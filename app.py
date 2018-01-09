@@ -25,15 +25,12 @@ def getResourceById(rid):
 #Route check if specific id is available.
 @app.route('/show/resource/id/<int:rid>/available')
 def checkAvailable(rid):
-	return 'Resouce ' + str(rid) + ' Is not here'	
+	return 'Resouce ' + str(rid) + ' Is not her
 
-#--------Supplier
-
-#Route used to get list of aupplier of specific resource.
-@app.route('/show/resource/supplier/<int:rid>')
+#Route used to get list of supplier of specific resource.
+@app.route('/show/resource/id/<int:rid>/supplier')
 def getResourceSupplierById(rid):
 	return 'Resouce ' + str(rid) + ' Is made by Hasbro'	
-
 
 #--------Available
 
