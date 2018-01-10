@@ -55,16 +55,12 @@ class ResourceHandler:
 
     def fromLocation(self, rid, location):
         dao = ResourceDAO()
-        supplier_list = dao.fromLocation(rid, location)
+        supplier_list = dao.getResourcesSuppplierFrom(rid,location)
         result_list = []
         for row in supplier_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
         return jsonify(Resource_Suppliers = result_list)
-
-
-
-
 
     #-------Check if Resource is avaiable.
 

@@ -1,4 +1,5 @@
 from flask import jsonify
+from userdao import UserDAO
 
 
 class UserHandler:
@@ -32,8 +33,8 @@ class UserHandler:
     #------Returns all Users in the Database
 
     def getAllUser(self):
-        dao = UserDao()
-        user_list = dao.getAllUser() 
+        dao = UserDAO()
+        user_list = dao.getAllUsers()
         result_list = []
         for row in user_list:
             result = self.build_user_dict(row)
@@ -43,8 +44,8 @@ class UserHandler:
     #------Recieves an User Id and the Retuns info of that User
 
     def getUserbyId(self, uid):
-        dao = UserDao()
-        row = dao.getUserbyId(uid)
+        dao = UserDAO()
+        row = dao.getUserById(uid)
         if not row:
             return jsonify(Error = "User Not Found"), 404
         else:
@@ -54,7 +55,7 @@ class UserHandler:
     #------Recieves an User Id an the Retuns Suppliers the user has bought from.
 
     def getUserResources(self, uid):
-        dao = UserDao()
+        dao = UserDAO()
         resource_list = dao.getUserResources(uid)
         result_list = []
         for row in resource_list:

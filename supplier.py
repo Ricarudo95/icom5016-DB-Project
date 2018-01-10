@@ -1,4 +1,5 @@
 from flask import jsonify
+from supplierdao import SupplierDAO
 
 
 class SupplierHandler:
@@ -34,8 +35,8 @@ class SupplierHandler:
     #------Returns all Suppliers in the Database
 
     def getAllSupplier(self):
-        dao = SupplierDao()
-        supplier_list = dao.getAllSupplier()
+        dao = SupplierDAO()
+        supplier_list = dao.getAllSuppliers()
         result_list = []
         for row in supplier_list:
             result = self.build_supplier_dict(row)
@@ -45,8 +46,8 @@ class SupplierHandler:
     #------Recieves an Supplier Id and the Retuns info of that supplier
 
     def getSupplierbyId(self, sid):
-        dao = SupplierDao()
-        row = dao.getSupplierbyId(uid)
+        dao = SupplierDAO()
+        row = dao.getSupplierById(sid)
         if not row:
             return jsonify(Error = "Supplier Not Found"), 404
         else:
@@ -56,8 +57,8 @@ class SupplierHandler:
      #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has.
 
     def getSupplierResources(self, sid):
-        dao = SupplierDao()
-        resource_list = dao.getSupplierResource()
+        dao = SupplierDAO()
+        resource_list = dao.getResourcesBySupplier(sid)
         result_list = []
         for row in resource_list:
             result = self.build_resource_dict(row)
@@ -67,8 +68,8 @@ class SupplierHandler:
     #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has Sold.
 
     def getSupplierResourceSold(self, sid):
-        dao = SupplierDao()
-        resource_list = dao.getSupplierResourceSold()
+        dao = SupplierDAO()
+        resource_list = dao.getSupplierResourceSold(sid)
         result_list = []
         for row in resource_list:
             result = self.build_resource_dict(row)
