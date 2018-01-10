@@ -97,7 +97,7 @@ class ResourceHandler:
     #------Returns all Requested resources in the Database
 
     def getRequestedResources(self):
-        dao = ResourceDao()
+        dao = ResourceDAO()
         resource_list = dao.getRequestedResource()
         result_list = []
         for row in resource_list:
@@ -108,36 +108,27 @@ class ResourceHandler:
     #------Search resourceses available witha specific keyword - INCOMPLETE
 
     def searchAvailable(self, args):
-        cartegory = args.get("category")
-        resources_list = []
-
-        if (len(args) == 1) and category:
-            resources_list = []
+         dao = ResourceDAO()
+        row = dao.searchAvailable(args)
+        if not row:
+            return jsonify(Error = "Resource Not Found"), 404
         else:
-            return jsonify(Error = "Malformed query string"), 400
-        result_list = []
-        for row in resources_list:
-            result = self.build_resource_dict(row)
-            result_list.append(result)
-        return jsonify(Resources=result_list)
+            resource = self.build_resource_dict(row)
+            return jsonify(Resource = resource)
 
     
     #------Search Requested resources with specific keyword - INCOMPLETE
 
     def searchRequested(self, args):
-        cartegory= args.get("category")
-        resources_list = []
-
-        if (len(args) == 1) and category:
-            resources_list = []
+        dao = ResourceDAO()
+        row = dao.searchRequested(args)
+        if not row:
+            return jsonify(Error = "Resource Not Found"), 404
         else:
-            return jsonify(Error = "Malformed query string"), 400
-        result_list = []
-        for row in resources_list:
-            result = self.build_resource_dict(row)
-            result_list.append(result)
-        return jsonify(Resources=result_list)
+            resource = self.build_resource_dict(row)
+            return jsonify(Resource = resource)
 
+       
     
 
     
