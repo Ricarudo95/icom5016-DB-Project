@@ -1,4 +1,5 @@
 from flask import jsonify
+from resourcedao import ResourceDAO
 
 
 class ResourceHandler:
@@ -31,7 +32,7 @@ class ResourceHandler:
     #------Returns all Users in the Database
 
     def getAllResources(self):
-        dao = ResourceDao()
+        dao = ResourceDAO()
         resource_list = dao.getAllResources()
         result_list = []
         for row in resource_list:
@@ -42,7 +43,7 @@ class ResourceHandler:
     #------Recieves an Resource Id and the Returns info of that Resource
 
     def getResourceById(self, rid):
-        dao = ResourceDao()
+        dao = ResourceDAO()
         row = dao.getResourceById(rid)
         if not row:
             return jsonify(Error = "Resource Not Found"), 404
@@ -53,7 +54,7 @@ class ResourceHandler:
     #------Recieves an Resource Id and Location and returns appropriate suppliers
 
     def fromLocation(self, rid, location):
-        dao = ResourceDao()
+        dao = ResourceDAO()
         supplier_list = dao.fromLocation(rid, location)
         result_list = []
         for row in supplier_list:
@@ -68,15 +69,15 @@ class ResourceHandler:
     #-------Check if Resource is avaiable.
 
     def isAvailable(self, rid):
-        dao = ResourceDao()
-        status = dao.isAvailable(rid)
+        dao = ResourceDAO()
+        status = dao.checkAvailableByID(rid)
         return status
     
     #------Recieves an Resource Id and the Returns list of Suppliers that have that resource.
 
     def getResourceSupplier(self, rid):
-        dao = ResourceDao()
-        supplier_list = dao.getResourceSupplier(rid)
+        dao = ResourceDAO()
+        supplier_list = dao.getResourceSupplierById(rid)
         result_list = []
         for row in supplier_list:
             result = self.build_supplier_dict(row)
@@ -86,8 +87,8 @@ class ResourceHandler:
     #------Returns all Available resources in the Database
 
     def getAvailableResources(self):
-        dao = ResourceDao()
-        resource_list = dao.getAvailableResources()
+        dao = ResourceDAO()
+        resource_list = dao.getAvailableResource()
         result_list = []
         for row in resource_list:
             result = self.build_resource_dict(row)
@@ -98,7 +99,7 @@ class ResourceHandler:
 
     def getRequestedResources(self):
         dao = ResourceDao()
-        resource_list = dao.getRequestedResources()
+        resource_list = dao.getRequestedResource()
         result_list = []
         for row in resource_list:
             result = self.build_resource_dict(row)

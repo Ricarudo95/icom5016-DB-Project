@@ -17,10 +17,10 @@ class ResourceDAO:
             result.append(row)
         return result
 
-    def getResourceById(self, pid):
+    def getResourceById(self, r_id):
         cursor = self.conn.cursor()
         query = "select * from resource where r_id = %s;"
-        cursor.execute(query, (pid,))
+        cursor.execute(query, (r_id,))
         result = cursor.fetchone()
         return result
 
