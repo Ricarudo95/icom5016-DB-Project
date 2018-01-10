@@ -84,7 +84,7 @@ class ResourceDAO:
 	    
     def getResourcesSuppplierFrom(self, rid, location):
         cursor = self.conn.cursor()
-        query = "select * from resources where r_id = %s and loc = (select loc from supplier where loc = %s;) ;"
+        query = "select s_id, sname, pass, loc, sa_id from supplier natural inner join resource where loc = %s and r_id = %s ;"
         cursor.execute(query, (rid, location,))
         result = []
         for row in cursor:
