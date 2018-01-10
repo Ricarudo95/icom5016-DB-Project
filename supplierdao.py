@@ -35,7 +35,7 @@ class SupplierDAO:
 
     def getSupplierResourceSold(self, sid):
         cursor = self.conn.cursor()
-        query = "------------------------------------------------------------------"
+        query = "select * from resource where r_id in (select r_id from stransaction;) and s_id=%s;"
         cursor.execute(query, (s_id,))
         result = []
         for row in cursor:
