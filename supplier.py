@@ -8,8 +8,8 @@ class SupplierHandler:
 
     def build_supplier_dict(self, row):
         result = {}
-        result['Suplier id'] = row[0]
-        result['Suplier Name'] = row[1]
+        result['Supplier ID'] = row[0]
+        result['Supplier Name'] = row[1]
         result['Password'] = row[2]
         result['Location'] = row[3]
         result['Address'] = row[4]
@@ -17,20 +17,17 @@ class SupplierHandler:
         return result
 
     #------Building Dictionary for Resources query results
-
+  
     def build_resource_dict(self, row):
         result = {}
-        result['r_id'] = row[0]
-        result['s_id'] = row[1]
-        result['rname'] = row[2]
-        result['category'] = row[3]
-        result['quantity'] = row[4]
-        result['price'] = row[5]
-        result['adminitrator'] = row[6]
-        result['transaction'] = row[7]
+        result['Resource ID'] = row[0]
+        result['Supplier ID'] = row[1]
+        result['Resource Name'] = row[2]
+        result['Category'] = row[3]
+        result['Quantity'] = row[4]
+        result['Price'] = row[5]
 
         return result
-
 
     #------Returns all Suppliers in the Database
 

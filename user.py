@@ -21,15 +21,15 @@ class UserHandler:
 
     def build_resource_dict(self, row):
         result = {}
-        result['r_id'] = row[0]
-        result['s_id'] = row[1]
-        result['rname'] = row[2]
-        result['category'] = row[3]
-        result['quantity'] = row[4]
-        result['price'] = row[5]
-     
+        result['Resource ID'] = row[0]
+        result['Supplier ID'] = row[1]
+        result['Resource Name'] = row[2]
+        result['Category'] = row[3]
+        result['Quantity'] = row[4]
+        result['Price'] = row[5]
 
         return result
+
     #------Returns all Users in the Database
 
     def getAllUser(self):
