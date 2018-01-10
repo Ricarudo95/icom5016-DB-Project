@@ -67,7 +67,10 @@ class ResourceHandler:
     def isAvailable(self, rid):
         dao = ResourceDAO()
         status = dao.checkAvailableByID(rid)
-        return status
+        if not status:
+            return False
+        else:
+            return True
     
     #------Recieves an Resource Id and the Returns list of Suppliers that have that resource.
 
