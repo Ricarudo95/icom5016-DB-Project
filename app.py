@@ -14,14 +14,14 @@ def index():
 #Basic Route that returns list of total resources. Sorted by resource name.
 @app.route('/show/resource')
 def showResources():
-    return ResourceHandle().getAllResources();
+    return ResourceHandler().getAllResources();
 
 #--------ID
 
 #Route used to get a resouce via its id
 @app.route('/show/resource/id/<int:rid>')
 def getResourceById(rid):
-	return ResourceHandler.getResourceById(rid)	
+	return ResourceHandler.getResourceById(rid)
 
 #Route check if specific id is available.
 @app.route('/show/resource/id/<int:rid>/available')

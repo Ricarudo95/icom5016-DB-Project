@@ -37,7 +37,7 @@ class SupplierDAO:
         cursor = self.conn.cursor()
         query = "------------------------------------------------------------------"
         cursor.execute(query, (s_id,))
-       result = []
+        result = []
         for row in cursor:
             result.append(row)
-       return result
+        return result
