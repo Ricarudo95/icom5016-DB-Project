@@ -94,21 +94,16 @@ def getSupplierReceipts(sid):
 #--------------------- Routes for User ---------------------------------
 
 #Basic Route that returns list of total Users.
-@app.route('/show/user')
+@app.route('/show/user' , methods=['GET','POST'])
 def showUsers():
-    return UserHandler().getAllUser();
+    if request.method == 'POST':
+    		return UserHandler().insertUser(request.form)
+	else:
+    	if not request,args:
+    		return UserHandler().getAllUser()	
+    	else:
+    		return User.serachUser(request.args)
 
-#--------ID
-
-#Basic Route that returns specific User.
-@app.route('/show/user/id/<int:uid>')
-def getUser(uid):
-    return UserHandler().getUserbyId(uid);
-
-#Basic Route that returns the list of resources specific user has bought or acquired.
-@app.route('/show/user/id/<int:uid>/acquired')
-def getUserResources(uid):
-    return UserHandler().getUserResources(uid);
 
 #-----------------------------------------------------------------------
 

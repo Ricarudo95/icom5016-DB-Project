@@ -63,3 +63,18 @@ class UserHandler:
             result_list.append(result)
         return jsonify(User_Resources = result_list)
 
+
+    def searchUser(self, args):
+        fname = args.get("uFirstName")
+        lname = args.get("uLastName")
+        upass = args.get("pass")
+        loc = args.get("loc")
+        dao = UserDAO()
+        userlist = []
+        result_list = []
+        if (len(args) == 1) and fname
+            userlist = dao.getUserbyName(fname)
+        for row in userlist:
+            result = self.build_user_dict(row)
+            result_list.append(result)
+        return jasonify(User = result_list)

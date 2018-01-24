@@ -32,3 +32,13 @@ class UserDAO:
         for row in cursor:
             result.append(row)
         return result
+
+
+    def getUserByName(self, fname):
+        cursor = slef.conn.cursor()
+        query = "select * from siteuser where uFirstName = %s;"
+        cursor.execute(query, (fname,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
