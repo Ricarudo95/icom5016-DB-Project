@@ -108,7 +108,7 @@ class ResourceHandler:
     #------Search resourceses available witha specific keyword - INCOMPLETE
 
     def searchAvailable(self, args):
-         dao = ResourceDAO()
+        dao = ResourceDAO()
         row = dao.searchAvailable(args)
         if not row:
             return jsonify(Error = "Resource Not Found"), 404

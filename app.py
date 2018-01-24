@@ -97,12 +97,12 @@ def getSupplierReceipts(sid):
 @app.route('/show/user' , methods=['GET','POST'])
 def showUsers():
     if request.method == 'POST':
-    		return UserHandler().insertUser(request.form)
-	else:
-    	if not request,args:
-    		return UserHandler().getAllUser()	
-    	else:
-    		return User.serachUser(request.args)
+    	return UserHandler().insertUser(request.form)
+	# else:
+	# 	if not request.args:
+    # 		return UserHandler().getAllUser()
+	# 	else:
+    # 		return User.serachUser(request.args)
 
 
 #-----------------------------------------------------------------------

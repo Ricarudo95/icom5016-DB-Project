@@ -72,7 +72,7 @@ class UserHandler:
         dao = UserDAO()
         userlist = []
         result_list = []
-        if (len(args) == 1) and fname
+        if (len(args) == 1) and fname:
             userlist = dao.getUserbyName(fname)
         for row in userlist:
             result = self.build_user_dict(row)
