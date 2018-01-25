@@ -45,10 +45,12 @@ class UserDAO:
 
     def addUser(self, fname, lname, upass, loc, address):
         cursor = self.conn.cursor()
-        address_query = "INSERT INTO useraddress (zip_code) VALUES (null) returning ua_id"
+        address_query = "insert into useraddress (location_name, region, city, zip_code) values (null,null,null,null) returning ua_id"
+        cursor.execute(address_query, )
         ua_id = cursor.fetchone()[0]
-        query = "insert into siteuser(uFirstName, uLastName, upass, loc, ua_id) values ( %s, %s, %s, %s, %s ) returning u_id"
-        u_id = cursor.fetchone()[0]
+        query = "insert into siteuser(uFirstName, uLastName, pass, loc, ua_id) values ( %s, %s, %s, %s, %s ) returning u_id"
         cursor.execute(query, (fname,lname,upass,loc,ua_id))
+        u_id = cursor.fetchone()[0]
+        
         self.conn.commit()
         return u_id

@@ -99,12 +99,11 @@ def showUsers():
     if request.method == 'POST':
     	print(request.form)
     	return UserHandler().addUser(request.form)
-	# else:
-	# 	if not request.args:
-    # 		return UserHandler().getAllUser()
-	# 	else:
-    # 		return User.serachUser(request.args)
-
+	elif not request.args:
+    	return UserHandler.getAllUser()
+	else:
+    	return 'for fucks sake'
+	
 
 #-----------------------------------------------------------------------
 

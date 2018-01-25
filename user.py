@@ -90,8 +90,8 @@ class UserHandler:
             address = form.get("address")
             if fname and lname and upass and loc and address:
                 dao = UserDAO()
-                uid = dao.addUser(fname, lname, upass, loc, address)
-                result = self.build_user_dict(uid, fname, lname, upass, loc, address)
-                return jsonify(Part=result), 201
+                u_id = dao.addUser(fname, lname, upass, loc, address)
+                return self.getUserbyId(u_id)
+                
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
