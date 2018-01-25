@@ -11,10 +11,17 @@ def index():
 
 #--------------------- Routes for Resouces -----------------------------
 
-#Basic Route that returns list of total resources. Sorted by resource name.
-@app.route('/show/resource')
-def showResources():
-    return ResourceHandler().getAllResources();
+# Route that returns list of total resources or insert new resources
+@app.route('/show/resource', methods=['GET', 'POST'])
+def getAllResources():
+    if request.method == 'POST':
+        return ResourceHandler().insert(request.form)
+    else:
+        if not request.args:
+            return ResourceHandler().getAllResources()
+        else:
+            return ResourceHandler().searchRequested(request.args)
+
 
 #--------ID
 

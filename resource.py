@@ -128,7 +128,20 @@ class ResourceHandler:
             resource = self.build_resource_dict(row)
             return jsonify(Resource = resource)
 
-       
-    
-
-    
+    def insert(self, form):
+        if len(form) != 5:
+            return jsonify(Error = "Malformed post request"), 400
+        else:
+            s_id= form['s_id']
+            rname = form['rname']
+            category = form['category']
+            quantity = form['quantity']
+            price = form['price']
+            if rname and category and quantity and price:
+                dao = ResourceDAO()
+                rid = dao.insert(s_id, rname, category, quantity, price)
+                row = [rid, s_id, rname, category, quantity, price]
+                result = self.build_resource_dict(row) 
+                return jsonify(Resource=result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
