@@ -78,3 +78,20 @@ class UserHandler:
             result = self.build_user_dict(row)
             result_list.append(result)
         return jasonify(User = result_list)
+
+    def addUser(self, form):
+        if len(form) != 5:
+            return jsonify(Error = "Malformed post request") , 400
+        else:
+            fname = form.get("uFirstName")
+            lname = form.get("uLastName")
+            upass = form.get("pass")
+            loc = form.get("loc")
+            address = form.get("address")
+            if fname and lname and upass and loc and address:
+                dao = UserDAO()
+                uid = dao.addUser(fname, lname, upass, loc, address)
+                result = self.build_user_dict(uid, fname, lname, upass, loc, address)
+                return jsonify(Part=result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400

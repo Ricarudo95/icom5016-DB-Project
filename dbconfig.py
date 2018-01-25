@@ -1,4 +1,4 @@
-#Databse configuration information
+#Database configuration information
 
 pg_config = {
     'user' : 'postgres',

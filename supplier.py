@@ -48,10 +48,10 @@ class SupplierHandler:
         if not row:
             return jsonify(Error = "Supplier Not Found"), 404
         else:
-            supplier = self.build_supplier_dict(row)
+            supplier = self.build_Supplier_dict(row)
             return jsonify(Supplier = supplier);
 
-     #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has.
+    #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has.
 
     def getSupplierResources(self, sid):
         dao = SupplierDAO()

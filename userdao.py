@@ -42,3 +42,13 @@ class UserDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def addUser(self, fname, lname, pass, loc, address):
+        cursor = self.conn.cursor()
+        address_query = "insert into "
+        query = "insert into siteuser (uFirstName, uLastName, pass, loc) values ()"
+        cursor.execute(query, (fname,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
