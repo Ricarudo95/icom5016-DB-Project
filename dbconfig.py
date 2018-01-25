@@ -1,7 +1,7 @@
 #Database configuration information
 
 pg_config = {
-    'user' : 'postgres',
-    'passwd' : '1234',
+    'user' : 'dev',
+    'passwd' : 'admin',
     'dbname' : 'disastersite'
 }
