@@ -1,4 +1,4 @@
-.vscode/database.json
+.vscode/*
 __pycache__/dbconfig.cpython-36.pyc
 __pycache__/user.cpython-36.pyc
 __pycache__/userdao.cpython-36.pyc
