@@ -70,24 +70,24 @@ def searchRequested(keyword):
 #Basic Route that returns list of total Suppliers.
 @app.route('/show/supplier')
 def showSupplier():
-    return SupplierHandler().getAllSupplier();
+        return SupplierHandler().getAllSupplier();
 
 #--------ID
 
 #Basic Route that returns specific Suppliers.
 @app.route('/show/supplier/id/<int:sid>')
 def getSupplier(sid):
-    return SupplierHandler().getSupplierbyId(sid);
+        return SupplierHandler().getSupplierbyId(sid);
 
 #Basic Route that returns then list of resources specific supplier supplies.
 @app.route('/show/supplier/id/<int:sid>/resource')
 def getSupplierResources(sid):
-    return SupplierHandler.getSupplierResources(sid);
+        return SupplierHandler.getSupplierResources(sid);
 
 #Basic Route that returns then list of resources specific supplier has sold.
 @app.route('/show/supplier/id/<int:sid>/sold')
 def getSupplierReceipts(sid):
-    return SupplierHandler().getSupplierResorceSold(sid);
+        return SupplierHandler().getSupplierResorceSold(sid);
 
 #-----------------------------------------------------------------------
 
@@ -95,14 +95,26 @@ def getSupplierReceipts(sid):
 
 #Basic Route that returns list of total Users.
 @app.route('/show/user' , methods=['GET','POST'])
+
 def showUsers():
-    if request.method == 'POST':
-    	print(request.form)
-    	return UserHandler().addUser(request.form)
-	elif not request.args:
-    	return UserHandler.getAllUser()
-	else:
-    	return 'for fucks sake'
+        if request.method == 'POST':
+                return UserHandler().addUser(request.form)
+        else:
+                if not request.args:
+                        return UserHandler().getAllUser()
+                else:
+                        return 'work for fucking gods sake'
+    		
+
+
+
+    # if request.method == 'POST':
+    # 	print(request.form)
+    # 	return UserHandler().addUser(request.form)
+	# elif not request.args:
+    # 	return UserHandler.getAllUser()
+	# else:
+    # 	return 'for fucks sake'
 	
 
 #-----------------------------------------------------------------------
