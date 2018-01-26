@@ -64,20 +64,7 @@ class UserHandler:
         return jsonify(User_Resources = result_list)
 
 
-    def searchUser(self, args):
-        fname = args.get("uFirstName")
-        lname = args.get("uLastName")
-        upass = args.get("pass")
-        loc = args.get("loc")
-        dao = UserDAO()
-        userlist = []
-        result_list = []
-        if (len(args) == 1) and fname:
-            userlist = dao.getUserbyName(fname)
-        for row in userlist:
-            result = self.build_user_dict(row)
-            result_list.append(result)
-        return jasonify(User = result_list)
+
 
     def addUser(self, form):
         if len(form) != 5:
@@ -95,3 +82,5 @@ class UserHandler:
                 
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
+
+    def updateUserCreditCard(self, u_id):
