@@ -35,7 +35,7 @@ class UserDAO:
 
 
     def getUserByName(self, fname):
-        cursor = slef.conn.cursor()
+        cursor = self.conn.cursor()
         query = "select * from siteuser where uFirstName = %s;"
         cursor.execute(query, (fname,))
         result = []
@@ -54,3 +54,11 @@ class UserDAO:
         
         self.conn.commit()
         return u_id
+    
+    def updateUserCreditCard(self,u_id, creditcard, in_use):
+        cursor = self.conn.cursor()
+        creditcard_query = "insert into creditcard (u_id, card_number, expiration_date, cvc_code, in_use) values (%d,%d,%s,%d,%s) returning c_id"
+        cursor.execute(creditcard_query, (u_id, creditcard, in_use))
+        c_id=cursor.fetchone()[0]
+        self.conn.commit()
+        return c_id
