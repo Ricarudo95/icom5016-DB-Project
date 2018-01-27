@@ -124,15 +124,10 @@ def userCards():
 
 
 
-@app.route('show/user/request', methods = ['GET','POST'])
+@app.route('show/user/request', methods = ['POST'])
 def userRequests():
-        if request.method == 'POST':
                 return UserHandler().createRequest(request.form)
-        else:
-                if not request.args
-                        return UserHandler().userTransactions()
-                else:
-                        return UserHandler().transactionCheck(request.args)
+        
 
 
 @app.route('/show/user/request/pay' , methods=['POST'])
