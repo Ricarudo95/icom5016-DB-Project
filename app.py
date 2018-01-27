@@ -78,12 +78,12 @@ def searchRequested(keyword):
 #--------------------- Routes for Suppliers ----------------------------
 
 #Basic Route that returns list of total Suppliers.
-@app.route('/show/supplier')
+@app.route('/show/supplier',  methods=['GET','POST'])
 def showSupplier():
         if request.method == 'POST':
-                return UserHandler().addUser(request.form)
+                return SupplierHandler().addSupplier(request.form)
         else:
-                return UserHandler().getAllUser()
+                return SupplierHandler().getAllSupplier()
                
 #--------ID
 
@@ -113,29 +113,16 @@ def showUsers():
         if request.method == 'POST':
                 return UserHandler().addUser(request.form)
         else:
-                if not request.args:
-                        return UserHandler().getAllUser()
-                else:
-                        return 'work for fucking gods sake'
+                return UserHandler().getAllUser()
+                
     		
 
 #Basic Route that returns list of total Users.
-@app.route('/show/user/card' , methods=['GET,POST'])
+@app.route('/show/user/card' , methods=['POST'])
 
 def userCards():
-        if request.method == 'POST':
-                return UserHandler().addCard(request.form)
-        else:
-                return UserHandler().getAllUserCards()
-               
-    # if request.method == 'POST':
-    # 	print(request.form)
-    # 	return UserHandler().addUser(request.form)
-	# elif not request.args:
-    # 	return UserHandler.getAllUser()
-	# else:
-    # 	return 'for fucks sake'
-	
+        return UserHandler().updateUserCreditCard(request.form)
+
 
 #-----------------------------------------------------------------------
 

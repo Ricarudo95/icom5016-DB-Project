@@ -46,8 +46,8 @@ class SupplierDAO:
         cursor = self.conn.cursor()
         address_query = "insert into supplieraddress (location_name, region, city, zip_code) values (null,null,null,null) returning sa_id"
         cursor.execute(address_query, )
-        ua_id = cursor.fetchone()[0]
-        query = "insert into supplier(sname, pass, loc, sa_id) values ( %s, %s, %s, %s, %s ) returning s_id"
+        sa_id = cursor.fetchone()[0]
+        query = "insert into supplier(sname, pass, loc, sa_id) values ( %s, %s, %s, %s ) returning s_id"
         cursor.execute(query, (s_name,s_pass,s_loc,sa_id))
         s_id = cursor.fetchone()[0]
         
