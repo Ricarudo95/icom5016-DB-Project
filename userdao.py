@@ -69,7 +69,27 @@ class UserDAO:
         self.conn.commit()
         return c_id
 
+    def createRequest(self, r_id, u_id, quantity, price):
+        cursor = self.conn.cursor()
+        #check if available
+        query1 = "select quantity from resource where quantity > %s and r_id = %s "
+        qtyAvailable= cursor.execute(query1, (quantity, r_id, ))
+        #check if free and available
+        query2 = "select quantity from resource where quantity > %s and price=0 and r_id = %s"
+        qtyfree= cursor.execute(query2, (quantity,r_id, ))
+        if qtyfree>0:
+            status='Completed'
+        elif qtyfree==0 and qtyAvailable>0:
+            status='In process'
+        else:
+            status='Out of stock'
+        #create transaction
+        query3 = "insert into stransaction (status, quantity, price, r_id, u_id) values (%s, %s, %s, %s, %s)"
+        cursor.execute(query3, (status, quantity, price, r_id, u_id,))
 
+        t_id = cursor.fetchone()[0]
+        self.conn.commit()
+        return t_id      
 
     def userPay(t_id,u_id,c_id):
         cursor = self.conn.cursor()
