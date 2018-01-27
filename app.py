@@ -113,8 +113,15 @@ def showUsers():
                         return 'work for fucking gods sake'
     		
 
+#Basic Route that returns list of total Users.
+@app.route('/show/user/card' , methods=['GET,POST'])
 
-
+def userCards():
+        if request.method == 'POST':
+                return UserHandler().addCard(request.form)
+        else:
+                return UserHandler().getAllUserCards()
+               
     # if request.method == 'POST':
     # 	print(request.form)
     # 	return UserHandler().addUser(request.form)
