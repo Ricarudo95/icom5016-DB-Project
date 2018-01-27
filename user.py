@@ -30,6 +30,18 @@ class UserHandler:
 
         return result
 
+     #------Building Dictionary for Resources query results    
+     def build_creditcard_dict(self, row):
+            result = {}
+        result['Credit Card ID'] = row[0]
+        result['User ID'] = row[1]
+        result['Card Number'] = row[2]
+        result['Expiration Date'] = row[3]
+        result['CVC Code'] = row[4]
+        result['Status'] = row[5]
+
+        return result
+
     #------Returns all Users in the Database
 
     def getAllUser(self):
@@ -64,20 +76,22 @@ class UserHandler:
         return jsonify(User_Resources = result_list)
 
 
-    def searchUser(self, args):
-        fname = args.get("uFirstName")
-        lname = args.get("uLastName")
-        upass = args.get("pass")
-        loc = args.get("loc")
-        dao = UserDAO()
-        userlist = []
-        result_list = []
-        if (len(args) == 1) and fname:
-            userlist = dao.getUserbyName(fname)
-        for row in userlist:
-            result = self.build_user_dict(row)
-            result_list.append(result)
-        return jasonify(User = result_list)
+def updateUserCreditCard(self, form):
+        if len(form) != 5:
+            return jsonify(Error = "Malformed post request") , 400
+        else:
+            u_id= form.get("u_id")
+            ccNumber=form.get("card_number")
+            expDate=form.get("expiration_date")
+            cvc_code=form.get("cvc_code")
+            in_use=form.get("in_use")
+
+            if u_id and ccNumber and expDate adn cvc_code and in_use:
+                dao = UserDAO()
+                c_id= dao.updateUserCreditCard(u_id, ccNumber, expDate, cvc_code, in_use)
+                return True
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def addUser(self, form):
         if len(form) != 5:
