@@ -31,7 +31,7 @@ class UserHandler:
 
         return result
 
-     #------Building Dictionary for Resources query results    
+     #------Building Dictionary for Creditcard query results    
     def build_creditcard_dict(self, row):
         result = {}
         result['Credit Card ID'] = row[0]
@@ -42,6 +42,7 @@ class UserHandler:
         result['Status'] = row[5]
 
         return result
+    
 
     #------Returns all Users in the Database
 
@@ -76,7 +77,7 @@ class UserHandler:
             result_list.append(result)
         return jsonify(User_Resources = result_list)
 
-
+    
     def updateUserCreditCard(self, form):
         if len(form) != 5:
             return jsonify(Error = "Malformed post request") , 400
@@ -110,3 +111,34 @@ class UserHandler:
                 
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
+    
+    def createRequest(self, form):
+        if len(form) !=5:
+            return jsonify(Error = "Malformed post request") , 400
+        else:
+            c_id= form.get("Credit Card ID")
+            price = form.get("Price")
+            qty = form.get("quantity")
+            u_id = form.get("User ID")
+            r_id = form.get("Resource ID")
+            if c_id and u_id:
+                dao = UserDAO()
+                t_id = dao.createRequest(r_id, u_id, qty, price)
+                return True
+            else:
+                return jsonify(Error="Unexpected attributes in post request")
+    
+    def userPay(self,form):
+        if len(form) != 3:
+            return return jsonify(Error = "Malformed post request") , 400
+        else:
+            t_id = form.get("Transaction ID")
+            u_id = form.get("User ID")
+            c_id = form.get("Credit Card ID")
+            if t_id and u_id and c_id:
+                dao.UserDAO()
+                dao.userPay(t_id,u_id,c_id)
+                return jsonify(Status=Complete)
+
+            else:
+                 return jsonify(Error="Unexpected attributes in post request"), 400
