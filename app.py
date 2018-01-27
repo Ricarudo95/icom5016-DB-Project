@@ -80,8 +80,11 @@ def searchRequested(keyword):
 #Basic Route that returns list of total Suppliers.
 @app.route('/show/supplier')
 def showSupplier():
-        return SupplierHandler().getAllSupplier();
-
+        if request.method == 'POST':
+                return UserHandler().addUser(request.form)
+        else:
+                return UserHandler().getAllUser()
+               
 #--------ID
 
 #Basic Route that returns specific Suppliers.
