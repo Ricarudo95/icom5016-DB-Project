@@ -119,10 +119,25 @@ def showUsers():
 
 #Basic Route that returns list of total Users.
 @app.route('/show/user/card' , methods=['POST'])
-
 def userCards():
         return UserHandler().updateUserCreditCard(request.form)
 
+
+
+@app.route('show/user/request', methods = ['GET','POST'])
+def userRequests():
+        if request.method == 'POST':
+                return UserHandler().createRequest(request.form)
+        else:
+                if not request.args
+                        return UserHandler().userTransactions()
+                else:
+                        return UserHandler().transactionCheck(request.args)
+
+
+@app.route('/show/user/request/pay' , methods=['POST'])
+def userPay():
+        return UserHandler().userPay(request.form)
 
 #-----------------------------------------------------------------------
 
