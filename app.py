@@ -22,13 +22,16 @@ def getAllResources():
         else:
             return ResourceHandler().searchRequested(request.args)
 
+#Route used to get a resouce via its id and update an existing resource
+@app.route('/show/resource/<int:r_id>', methods=['GET', 'PUT'])
+def getResourceById(r_id):
+    if request.method == 'GET':
+        return ResourceHandler().getResourceById(r_id)
+    elif request.method == 'PUT':
+        return ResourceHandler().update(r_id, request.form)
+    else:
+        return jsonify(Error="Method not allowerd."), 405
 
-#--------ID
-
-#Route used to get a resouce via its id
-@app.route('/show/resource/id/<int:rid>')
-def getResourceById(rid):
-	return ResourceHandler().getResourceById(rid)
 
 #Route check if specific id is available.
 @app.route('/show/resource/id/<int:rid>/available')

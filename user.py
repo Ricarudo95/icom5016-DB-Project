@@ -83,4 +83,3 @@ class UserHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def updateUserCreditCard(self, u_id):
