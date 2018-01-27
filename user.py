@@ -90,7 +90,7 @@ class UserHandler:
             if u_id and ccNumber and expDate and cvc_code and c_update:
                 dao = UserDAO()
                 c_id= dao.updateUserCreditCard(u_id, ccNumber, expDate, cvc_code, c_update)
-                return True
+                return 'True'
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 

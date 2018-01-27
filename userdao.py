@@ -57,14 +57,14 @@ class UserDAO:
     
     def updateUserCreditCard(self,u_id, card_number, expiration_date, cvc_code, c_update):
         cursor = self.conn.cursor()
-        if c_update:
+        if c_update == 'True':
             update_query1 = "select c_id from creditcard where u_id = %s and card_number= %s and in_use = %s"
             cursor.execute(update_query1, (u_id,card_number, "True"))
             update_query2 = "update creditcard set in_use = %s where u_id = %s and card_number = %s"
             cursor.execute(update_query2, ("False", u_id, card_number))
 
-        creditcard_query = "insert into creditcard (u_id, card_number, expiration_date, cvc_code, in_use) values (%s,%s,%s,%s,%s) returning c_id"
-        cursor.execute(creditcard_query, (u_id, card_number, expiration_date, cvc_code, c_update))
+        creditcard_query = "insert into creditcard (u_id, card_number, cvc_code, in_use) values (%s,%s,%s,%s) returning c_id"
+        cursor.execute(creditcard_query, (u_id, card_number,cvc_code, 'true'))
         c_id=cursor.fetchone()[0]
         self.conn.commit()
         return c_id
