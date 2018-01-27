@@ -99,3 +99,10 @@ class ResourceDAO:
         self.conn.commit()
         return r_id
 
+    def update(self, r_id,  s_id, rname, category, quantity, price):
+        cursor = self.conn.cursor()
+        query = "update resource set s_id= %s, rname=%s, category=%s, quantity=%s, price=%s where r_id =%s;"
+        cursor.execute(query, ( s_id, rname, category, quantity, price, r_id,))
+        self.conn.commit()
+        return r_id
+

@@ -81,12 +81,11 @@ class SupplierHandler:
         sup_loc = form.get("Location")
 
         if sup_name and sup_pass and sup_loc:
-                dao = SupplierDAO()
-                s_id = dao.addSupplier(sup_name, sup_pass, sup_loc)
-                return self.getSupplierbyId(s_id)
-                
-            else:
-                return jsonify(Error="Unexpected attributes in post request"), 400
+            dao = SupplierDAO()
+            s_id = dao.addSupplier(sup_name, sup_pass, sup_loc)
+            return self.getSupplierbyId(s_id)
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
 
 
 
