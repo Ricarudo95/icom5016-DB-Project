@@ -42,6 +42,18 @@ class UserHandler:
         result['Status'] = row[5]
 
         return result
+
+    def build_transaction_dict(self, row):
+        result = {}
+        result['Transaction ID'] = row[0]
+        result['Credit Card ID'] = row[1]
+        result['Quantity'] = row[2]
+        result['Price'] = row[3]
+        result['Resource ID'] = row[4]
+        result['User ID'] = row[5]
+        result['Status'] = row[7]
+
+        return result
     
 
     #------Returns all Users in the Database
@@ -122,7 +134,8 @@ class UserHandler:
             if r_id and u_id and qty:
                 dao = UserDAO()
                 t_id = dao.createRequest(r_id, u_id, qty)
-                return 'True'
+                transaction = self.build_transaction_dict (dao.getTransaction(t_id))
+                return jsonify(Transaction=transaction)
             else:
                 return jsonify(Error="Unexpected attributes in post request")
     
