@@ -124,7 +124,7 @@ def userCards():
 
 
 
-@app.route('show/user/request', methods = ['POST'])
+@app.route('/show/user/request', methods = ['POST'])
 def userRequests():
                 return UserHandler().createRequest(request.form)
         

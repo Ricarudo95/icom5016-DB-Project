@@ -113,24 +113,22 @@ class UserHandler:
                 return jsonify(Error="Unexpected attributes in post request"), 400
     
     def createRequest(self, form):
-        if len(form) !=5:
+        if len(form) !=3:
             return jsonify(Error = "Malformed post request") , 400
         else:
-            c_id= form.get("Credit Card ID")
-            price = form.get("Price")
-            qty = form.get("quantity")
+            qty = form.get("Quantity")
             u_id = form.get("User ID")
             r_id = form.get("Resource ID")
-            if c_id and u_id:
+            if r_id and u_id and qty:
                 dao = UserDAO()
-                t_id = dao.createRequest(r_id, u_id, qty, price)
-                return True
+                t_id = dao.createRequest(r_id, u_id, qty)
+                return 'True'
             else:
                 return jsonify(Error="Unexpected attributes in post request")
     
     def userPay(self,form):
         if len(form) != 3:
-            return return jsonify(Error = "Malformed post request") , 400
+            return jsonify(Error = "Malformed post request") , 400
         else:
             t_id = form.get("Transaction ID")
             u_id = form.get("User ID")

@@ -69,17 +69,19 @@ class UserDAO:
         self.conn.commit()
         return c_id
 
-    def createRequest(self, r_id, u_id, quantity, price):
+    def createRequest(self, r_id, u_id, quantity):
         cursor = self.conn.cursor()
-        #check if available
-        query1 = "select quantity from resource where quantity > %s and r_id = %s "
-        qtyAvailable= cursor.execute(query1, (quantity, r_id, ))
-        #check if free and available
-        query2 = "select quantity from resource where quantity > %s and price=0 and r_id = %s"
-        qtyfree= cursor.execute(query2, (quantity,r_id, ))
-        if qtyfree>0:
+       
+        query1 = "select quantity from resource where r_id = %s "
+        qtyAvailable= cursor.execute(query1, ( r_id ))
+      
+        query2 = "select price from resource where r_id = %s"
+        price = cursor.execute(query2, (r_id ))
+        if price==0:
             status='Completed'
-        elif qtyfree==0 and qtyAvailable>0:
+            update_query = "update resource set quantity = (quantity- %s) where r_id = %s"
+            cursor.execute(pq_query, (purchase_qty, r_id)
+        elif price > 0 and qtyAvailable > 0:
             status='In process'
         else:
             status='Out of stock'
@@ -90,6 +92,7 @@ class UserDAO:
         t_id = cursor.fetchone()[0]
         self.conn.commit()
         return t_id      
+
 
     def userPay(t_id,u_id,c_id):
         cursor = self.conn.cursor()
@@ -108,8 +111,9 @@ class UserDAO:
         if current_qty >= purchase_qty:
             update_query = "update stransaction set c_id=%s, status = %s where t_id = %s"
             cursor.execute(pq_query, (c_id, 'Completed', t_id))
-            update_query = "ipdate resource set quantity = (quantity- %s) where r_id = %s"
+            update_query = "update resource set quantity = (quantity- %s) where r_id = %s"
             cursor.execute(pq_query, (purchase_qty, r_id)
+
             return 'Completed'
         else:
             return 'Out Of Stock'
