@@ -103,27 +103,36 @@ class UserDAO:
         result = cursor.fetchone()
         return result
 
-    # def userPay(t_id,u_id,c_id):
-    #     cursor = self.conn.cursor()
-    #     pq_query = "select quantity from stransaction where t_id = %s"
-    #     cursor.execute(pq_query, (t_id))
-    #     purchase_qty = cursor.fetchone()[0]
+    def userPay(self, t_id,u_id,c_id):
+        cursor = self.conn.cursor()
+        check_query = "select status from stransaction where t_id = %s"
+        cursor.execute(check_query, (t_id))
+        status = cursor.fetchone()[0]
+        if status != "Completed":
+            pq_query = "select quantity from stransaction where t_id = %s"
+            cursor.execute(pq_query, (t_id))
+            purchase_qty = cursor.fetchone()[0]
 
-    #     id_query = "select r_id from stransaction where t_id = %s"
-    #     cursor.execute(id_query, (t_id))
-    #     r_id = cursor.fetchone()[0]
+            id_query = "select r_id from stransaction where t_id = %s"
+            cursor.execute(id_query, (t_id))
+            r_id = cursor.fetchone()[0]
 
-    #     qt_query = "select quantuty from resource where r_id = %s"
-    #     cursor.execute(id_query, (r_id))
-    #     current_qty = cursor.fetchone()[0]
+            qt_query = "select quantity from resource where r_id = %s"
+            cursor.execute(id_query, (r_id))
+            current_qty = cursor.fetchone()[0]
 
-    #     if current_qty >= purchase_qty:
-    #         update_query = "update stransaction set c_id=%s, status = %s where t_id = %s"
-    #         cursor.execute(pq_query, (c_id, 'Completed', t_id))
-    #         update_query = "update resource set quantity = (quantity- %s) where r_id = %s"
-    #         cursor.execute(pq_query, (purchase_qty, r_id)
-
-    #         self.conn.commit() 
-    #         return 'Completed'
-    #     else:
-    #         return 'Out Of Stock'
+            if current_qty >= purchase_qty:
+                update_query = "update stransaction set c_id=%s, status = %s where t_id = %s"
+                cursor.execute(pq_query, (c_id, 'Completed', t_id))
+                update_query = "update resource set quantity = (quantity- %s) where r_id = %s"
+                cursor.execute(pq_query, (purchase_qty, r_id))
+                self.conn.commit() 
+                return t_id
+            else:
+                status = 'Out Of Stock'
+                update_query = "update stransaction set c_id=%s, status = %s where t_id = %s"
+                cursor.execute(pq_query, (c_id, status, t_id))
+                self.conn.commit()
+                return t_id
+        else:
+            return t_id

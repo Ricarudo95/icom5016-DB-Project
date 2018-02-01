@@ -147,9 +147,11 @@ class UserHandler:
             u_id = form.get("User ID")
             c_id = form.get("Credit Card ID")
             if t_id and u_id and c_id:
-                dao.UserDAO()
-                status = dao.userPay(t_id,u_id,c_id)
-                return jsonify(Status= status)
+                dao = UserDAO()
+                t_id = dao.userPay(t_id,u_id,c_id)
+                transaction = self.build_transaction_dict (dao.getTransaction(t_id))
+                return jsonify(Transaction=transaction)
+                
 
             else:
                  return jsonify(Error="Unexpected attributes in post request"), 400
