@@ -36,10 +36,10 @@ class UserHandler:
         result = {}
         result['Credit Card ID'] = row[0]
         result['User ID'] = row[1]
-        result['Card Number'] = row[2]
-        result['Expiration Date'] = row[3]
-        result['CVC Code'] = row[4]
-        result['Status'] = row[5]
+        result['Expiration Date'] = row[2]
+        result['CVC Code'] = row[3]
+        result['Active'] = row[4]
+        result['Card Number'] = row[5]
 
         return result
 
@@ -89,7 +89,6 @@ class UserHandler:
             result_list.append(result)
         return jsonify(User_Resources = result_list)
 
-    
     def updateUserCreditCard(self, form):
         if len(form) != 5:
             return jsonify(Error = "Malformed post request") , 400
@@ -102,10 +101,16 @@ class UserHandler:
 
             if u_id and ccNumber and expDate and cvc_code and c_update:
                 dao = UserDAO()
-                c_id= dao.updateUserCreditCard(u_id, ccNumber, expDate, cvc_code, c_update)
-                return 'True'
+                card_list = dao.updateUserCreditCard(u_id, ccNumber, expDate, cvc_code, c_update)
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
+            
+            
+        result_list = []   
+        for row in card_list:
+            result = self.build_creditcard_dict(row)
+            result_list.append(result)
+        return jsonify(New_Cards = result_list)
 
     def addUser(self, form):
         if len(form) != 5:
@@ -134,7 +139,7 @@ class UserHandler:
             if r_id and u_id and qty:
                 dao = UserDAO()
                 t_id = dao.createRequest(r_id, u_id, qty)
-                transaction = self.build_transaction_dict (dao.getTransaction(t_id))
+                transaction = self.build_transaction_dict (dao.getTransactionByID(t_id))
                 return jsonify(Transaction=transaction)
             else:
                 return jsonify(Error="Unexpected attributes in post request")
@@ -149,9 +154,81 @@ class UserHandler:
             if t_id and u_id and c_id:
                 dao = UserDAO()
                 t_id = dao.userPay(t_id,u_id,c_id)
-                transaction = self.build_transaction_dict (dao.getTransaction(t_id))
-                return jsonify(Transaction=transaction)
+                if t_id == 'Error With Payment':
+                    return t_id
+                else:
+                    transaction = self.build_transaction_dict (dao.getTransactionByID(t_id))
+                    return jsonify(Transaction=transaction)
                 
 
             else:
                  return jsonify(Error="Unexpected attributes in post request"), 400
+
+    def getCardbyID(self, uid):
+        dao = UserDAO()
+        resource_list = dao.getUserCards(uid)
+        result_list = []
+        for row in resource_list:
+            result = self.build_creditcard_dict(row)
+            result_list.append(result)
+        return jsonify(User_Cards = result_list)
+
+    def getResourceBought(self,u_id):
+        dao = UserDAO()
+        resource_list = dao.getUserResourcesBought(u_id)
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(User_Bought_Resources = result_list)
+
+    def getResourceRequest(self,u_id):
+        dao = UserDAO()
+        resource_list = dao.getUserResourcesRequested(u_id)
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(User_Requested_Resources = result_list)
+    
+    def getUserTransaction(self,u_id):
+        dao = UserDAO()
+        resource_list = dao.getUserTransaction(u_id)
+        result_list = []
+        for row in resource_list:
+            result = self.build_transaction_dict(row)
+            result_list.append(result)
+        return jsonify(User_Transactions = result_list)
+
+    def userSearch(self,args):
+        fname = args.get("First_Name")
+        lname = args.get("Last_Name")
+        loc = args.get("Loc")
+        dao = UserDAO()
+        user_list =[]
+        if len(args) == 3:
+            user_list = dao.getUserByFnameLnameLoc(fname,lname,loc)
+        elif len(args) == 2 and fname and lname:
+            user_list = dao.getUserByFnameLname(fname,lname)
+        elif len(args) == 2 and fname and loc:
+            user_list = dao.getUserByFnameLoc(fname,loc)
+        elif len(args) == 2 and loc and lname:
+            user_list = dao.getUserByLnameLoc(lname,loc)
+        elif len(args) == 1 and fname:
+            user_list = dao.getUserByFname(fname)
+        elif len(args) == 1 and lname:
+            user_list = dao.getUserByLname(lname)
+        elif len(args) == 1 and loc:
+            user_list = dao.getUserByLoc(loc)
+        else:
+            return jsonify(Error = "Malformed query string"), 400
+        result_list = []
+        for row in user_list:
+            result = self.build_user_dict(row)
+            result_list.append(result)
+        return jsonify(Users=result_list)
+            
+
+           
+
+    

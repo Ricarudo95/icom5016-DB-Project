@@ -72,16 +72,30 @@ class ResourceHandler:
         else:
             return 'True'
     
-    #------Recieves an Resource Id and the Returns list of Suppliers that have that resource.
+    
 
-    def getResourceSupplier(self, rid):
+    def getResourceSupplier(self, args):
+        name = args.get("Name")
+        cat = args.get("Category")
+        loc = args.get("Location")
         dao = ResourceDAO()
-        supplier_list = dao.getResourceSupplierById(rid)
+        supplier_list = []
+
+        if len(args) == 2 and name and loc:
+            supplier_list = dao.supplierByNameAndLoc(name,loc)
+        elif len(args) == 2 and cat and loc:
+            supplier_list = dao.supplierByCatAndLoc(cat,loc)
+        elif len(args) == 1 and name:
+            supplier_list = dao.supplierByName(name)
+        elif len(args) == 1 and cat:
+            supplier_list = dao.supplierByCat(name)
+        else:
+            return jsonify(Error = "Malformed query string"), 400
         result_list = []
         for row in supplier_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
-        return jsonify(Resource_Suppliers = result_list)
+        return jsonify(Suppliers=result_list)
 
     #------Returns all Available resources in the Database
 
@@ -104,29 +118,6 @@ class ResourceHandler:
             result = self.build_resource_dict(row)
             result_list.append(result)
         return jsonify(Resources=result_list)
-
-    #------Search resourceses available witha specific keyword - INCOMPLETE
-
-    def searchAvailable(self, args):
-        dao = ResourceDAO()
-        row = dao.searchAvailable(args)
-        if not row:
-            return jsonify(Error = "Resource Not Found"), 404
-        else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource = resource)
-
-    
-    #------Search Requested resources with specific keyword - INCOMPLETE
-
-    def searchRequested(self, args):
-        dao = ResourceDAO()
-        row = dao.searchRequested(args)
-        if not row:
-            return jsonify(Error = "Resource Not Found"), 404
-        else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource = resource)
 
     def insert(self, form):
         if len(form) != 5:
@@ -167,3 +158,36 @@ class ResourceHandler:
                     return jsonify(Resource=result), 201
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400
+    
+    def searchResource(self, args):
+        name = args.get("Name")
+        cat = args.get("Category")
+        status = args.get("Status")
+        dao = ResourceDAO()
+        resource_list = []
+        if len(args) == 2 and name and status == "Any":
+            resource_list = dao.searchByName(name)
+        elif len(args) == 2 and name and status ==  "Requested":
+            resource_list = dao.searchByNameRequested(name)
+        elif len(args) == 2 and name and status ==  "Available":
+            resource_list = dao.searchByNameAvailable(name)
+        elif len(args) == 2 and cat and status == "Any":
+            resource_list = dao.searchByCat(name)
+        elif len(args) == 2 and cat and status ==  "Requested":
+            resource_list = dao.searchByCatRequested(cat)
+        elif len(args) == 2 and cat and status ==  "Available":
+            resource_list = dao.searchByCatAvailable(cat)
+        elif len(args) == 1 and name:
+            resource_list = dao.searchByName(name)
+        elif len(args) == 1 and cat:
+            resource_list = dao.searchByCat(cat)
+        else:
+            return jsonify(Error = "Malformed query string"), 400
+        result_list = []
+        for row in resource_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources=result_list)
+
+        
+            

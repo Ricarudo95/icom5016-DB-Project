@@ -20,17 +20,17 @@ def getAllResources():
         if not request.args:
             return ResourceHandler().getAllResources()
         else:
-            return ResourceHandler().searchRequested(request.args)
+            return ResourceHandler().searchResource(request.args)
 
 #Route used to get a resouce via its id and update an existing resource
-@app.route('/show/resource/<int:r_id>', methods=['GET', 'PUT'])
+@app.route('/show/resource/id/<int:r_id>', methods=['GET', 'PUT'])
 def getResourceById(r_id):
     if request.method == 'GET':
         return ResourceHandler().getResourceById(r_id)
     elif request.method == 'PUT':
         return ResourceHandler().update(r_id, request.form)
     else:
-        return jsonify(Error="Method not allowerd."), 405
+        return jsonify(Error="Method not allowed."), 405
 
 
 #Route check if specific id is available.
@@ -39,9 +39,9 @@ def checkAvailable(rid):
 	return ResourceHandler().isAvailable(rid)
 
 #Route used to get list of supplier of specific resource.
-@app.route('/show/resource/id/<int:rid>/supplier')
-def getResourceSupplierById(rid):
-	return ResourceHandler().getResourceSupplier(rid)
+@app.route('/show/resource/supplier', methods=['GET'])
+def getResourceSupplierById():
+	return ResourceHandler().getResourceSupplier(request.args)
 
 #Routes used to get suppliers of items in a specific location
 @app.route('/show/resource/id/<int:rid>/locate/<location>')
@@ -93,14 +93,18 @@ def getSupplier(sid):
         return SupplierHandler().getSupplierbyId(sid);
 
 #Basic Route that returns then list of resources specific supplier supplies.
-@app.route('/show/supplier/id/<int:sid>/resource')
-def getSupplierResources(sid):
-        return SupplierHandler.getSupplierResources(sid);
+@app.route('/show/supplier/resource/id/<int:s_id>')
+def getSupplierResources(s_id):
+        return SupplierHandler().getSupplierResources(s_id);
+
+@app.route('/show/supplier/transactions/id/<int:sid>')
+def getSupplierTransactions(sid):
+        return SupplierHandler().getSupplierTransactions(sid);
 
 #Basic Route that returns then list of resources specific supplier has sold.
-@app.route('/show/supplier/id/<int:sid>/sold')
+@app.route('/show/supplier/sold/id/<int:sid>')
 def getSupplierReceipts(sid):
-        return SupplierHandler().getSupplierResorceSold(sid);
+        return SupplierHandler().getSupplierSold(sid);
 
 #-----------------------------------------------------------------------
 
@@ -113,26 +117,45 @@ def showUsers():
         if request.method == 'POST':
                 return UserHandler().addUser(request.form)
         else:
-                return UserHandler().getAllUser()
+                if not request.args:
+                        return UserHandler().getAllUser()
+                else:
+                        return UserHandler().userSearch(request.args)
                 
-    		
+#Basic Route that returns specific User.
+@app.route('/show/user/id/<int:uid>')
+def getUser(uid):
+    return UserHandler().getUserbyId(uid);
 
 #Basic Route that returns list of total Users.
 @app.route('/show/user/card' , methods=['POST'])
 def userCards():
         return UserHandler().updateUserCreditCard(request.form)
 
-
+@app.route('/show/user/card/id/<int:uid>')
+def getUserCards(uid):
+        return UserHandler().getCardbyID(uid)
 
 @app.route('/show/user/request', methods = ['POST'])
 def userRequests():
                 return UserHandler().createRequest(request.form)
-        
-
 
 @app.route('/show/user/request/pay' , methods=['POST'])
 def userPay():
         return UserHandler().userPay(request.form)
+
+@app.route('/show/user/request/id/<int:uid>')
+def getUserTransacactions(uid):
+        return UserHandler().getUserTransaction(uid)
+
+@app.route('/show/user/resource/acquired/id/<int:uid>')
+def getUserBought(uid):
+        return UserHandler().getResourceBought(uid)
+
+@app.route('/show/user/resource/requested/id/<int:uid>')
+def getUserRequested(uid):
+        return UserHandler().getResourceRequest(uid)
+
 
 #-----------------------------------------------------------------------
 

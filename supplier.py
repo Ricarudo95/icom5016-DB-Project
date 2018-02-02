@@ -29,6 +29,18 @@ class SupplierHandler:
 
         return result
 
+    def build_transaction_dict(self, row):
+        result = {}
+        result['Transaction ID'] = row[0]
+        result['Credit Card ID'] = row[1]
+        result['Quantity'] = row[2]
+        result['Price'] = row[3]
+        result['Resource ID'] = row[4]
+        result['User ID'] = row[5]
+        result['Status'] = row[7]
+
+        return result
+
     #------Returns all Suppliers in the Database
 
     def getAllSupplier(self):
@@ -64,7 +76,7 @@ class SupplierHandler:
 
     #------Recieves an Supplier Id and the Retuns all reosurces that the supplier has Sold.
 
-    def getSupplierResourceSold(self, sid):
+    def getSupplierSold(self, sid):
         dao = SupplierDAO()
         resource_list = dao.getSupplierResourceSold(sid)
         result_list = []
@@ -72,6 +84,15 @@ class SupplierHandler:
             result = self.build_resource_dict(row)
             result_list.append(result)
         return jsonify(Suppliers_Resources = result_list)
+
+    def getSupplierTransactions(self, sid):
+        dao = SupplierDAO()
+        resource_list = dao.getSupplierTransactions(sid)
+        result_list = []
+        for row in resource_list:
+            result = self.build_transaction_dict(row)
+            result_list.append(result)
+        return jsonify(Suppliers_Transactions = result_list)
 
     def addSupplier(self, form):
         if len(form) != 3:
